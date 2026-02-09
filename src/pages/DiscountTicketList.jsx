@@ -11,7 +11,7 @@ import {
     Percent,
     DollarSign
 } from 'lucide-react';
-import { discountTickets as initialTickets } from '../data/mockData';
+import { discountTickets as initialTickets, parkingLots } from '../data/mockData';
 import DiscountTicketModal from '../components/DiscountTicketModal';
 
 const DiscountTicketList = () => {

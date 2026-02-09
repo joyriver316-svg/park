@@ -21,6 +21,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     const navItems = [
         { icon: Bot, label: 'AI 에이전트', to: '/ai-agent' },
         { icon: LayoutDashboard, label: '대시보드', to: '/' },
+        { icon: Cctv, label: '통합 관제', to: '/monitoring' },
         { icon: Car, label: '주차장 관리', to: '/parking-lots' },
         { icon: FileText, label: '요금 정책', to: '/policies' },
         { icon: CreditCard, label: '정기권 관리', to: '/regular-passes' },
@@ -30,7 +31,6 @@ const Sidebar = ({ isOpen, onClose }) => {
         { icon: FileText, label: '입출차 로그', to: '/logs' },
         { icon: Users, label: '사용자 관리', to: '/users' },
         { icon: Settings, label: '시스템 설정', to: '/settings' },
-        { icon: Cctv, label: '통합 관제', to: '/monitoring' },
         { icon: Building2, label: '테넌트 관리', to: '/tenants' },
     ];
 
