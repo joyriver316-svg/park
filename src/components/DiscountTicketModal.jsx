@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save } from 'lucide-react';
 
-const DiscountTicketModal = ({ isOpen, onClose, onSave, ticket }) => {
+const DiscountTicketModal = ({ isOpen, onClose, onSave, ticket, parkingLots }) => {
     const [formData, setFormData] = useState({
         name: '',
         code: '',
         type: 'Time',
         value: 0,
         validityPeriod: '',
-        isActive: true
+        isActive: true,
+        parkingLotId: 'All'
     });
 
     useEffect(() => {
@@ -21,7 +22,8 @@ const DiscountTicketModal = ({ isOpen, onClose, onSave, ticket }) => {
                 type: 'Time',
                 value: 0,
                 validityPeriod: '',
-                isActive: true
+                isActive: true,
+                parkingLotId: 'All'
             });
         }
     }, [ticket, isOpen]);
@@ -70,6 +72,20 @@ const DiscountTicketModal = ({ isOpen, onClose, onSave, ticket }) => {
                                 value={formData.code}
                                 onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
                             />
+                        </div>
+
+                        <div>
+                            <label className="block text-xs font-medium text-slate-500 mb-1">적용 주차장</label>
+                            <select
+                                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                                value={formData.parkingLotId}
+                                onChange={(e) => setFormData({ ...formData, parkingLotId: e.target.value })}
+                            >
+                                <option value="All">전체 공통</option>
+                                {parkingLots && parkingLots.map(lot => (
+                                    <option key={lot.id} value={lot.id}>{lot.name}</option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">

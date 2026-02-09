@@ -6,7 +6,7 @@ const RegularPassModal = ({ isOpen, onClose, onSave, pass, parkingLots }) => {
         name: '',
         type: 'Monthly',
         price: 0,
-        parkingLot: parkingLots && parkingLots.length > 0 ? parkingLots[0].name : '',
+        parkingLotId: 'All',
         description: '',
         isActive: true
     });
@@ -19,12 +19,12 @@ const RegularPassModal = ({ isOpen, onClose, onSave, pass, parkingLots }) => {
                 name: '',
                 type: 'Monthly',
                 price: 0,
-                parkingLot: parkingLots && parkingLots.length > 0 ? parkingLots[0].name : '',
+                parkingLotId: 'All',
                 description: '',
                 isActive: true
             });
         }
-    }, [pass, isOpen, parkingLots]);
+    }, [pass, isOpen]);
 
     if (!isOpen) return null;
 
@@ -89,12 +89,12 @@ const RegularPassModal = ({ isOpen, onClose, onSave, pass, parkingLots }) => {
                             <label className="block text-xs font-medium text-slate-500 mb-1">적용 주차장</label>
                             <select
                                 className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-                                value={formData.parkingLot}
-                                onChange={(e) => setFormData({ ...formData, parkingLot: e.target.value })}
+                                value={formData.parkingLotId}
+                                onChange={(e) => setFormData({ ...formData, parkingLotId: e.target.value })}
                             >
-                                <option value="">선택해주세요</option>
+                                <option value="All">전체 공통</option>
                                 {parkingLots && parkingLots.map(lot => (
-                                    <option key={lot.id} value={lot.name}>{lot.name}</option>
+                                    <option key={lot.id} value={lot.id}>{lot.name}</option>
                                 ))}
                             </select>
                         </div>

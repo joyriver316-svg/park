@@ -12,12 +12,14 @@ import {
     Ticket,
     Briefcase,
     Cctv,
-    Building2
+    Building2,
+    Bot
 } from 'lucide-react';
 import clsx from 'clsx';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
     const navItems = [
+        { icon: Bot, label: 'AI 에이전트', to: '/ai-agent' },
         { icon: LayoutDashboard, label: '대시보드', to: '/' },
         { icon: Car, label: '주차장 관리', to: '/parking-lots' },
         { icon: FileText, label: '요금 정책', to: '/policies' },
@@ -33,13 +35,16 @@ const Sidebar = () => {
     ];
 
     return (
-        <aside className="w-64 bg-white border-r border-slate-200 text-slate-600 flex flex-col h-screen fixed left-0 top-0 z-50 transition-all duration-300">
+        <aside className={clsx(
+            "w-64 bg-white border-r border-slate-200 text-slate-600 flex flex-col h-screen fixed left-0 top-0 z-50 transition-transform duration-300 lg:translate-x-0",
+            isOpen ? "translate-x-0" : "-translate-x-full"
+        )}>
             <div className="p-6 border-b border-slate-100 flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
                     P
                 </div>
                 <div>
-                    <Link to="/" className="block">
+                    <Link to="/" className="block" onClick={onClose}>
                         <h1 className="text-lg font-bold text-slate-900 tracking-tight hover:text-blue-600 transition-colors">
                             Park & Play
                         </h1>
@@ -48,14 +53,15 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto custom-scrollbar">
+            <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto custom-scrollbar">
                 {navItems.map((item) => (
                     <NavLink
                         key={item.to}
                         to={item.to}
+                        onClick={onClose}
                         className={({ isActive }) =>
                             clsx(
-                                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium",
+                                "flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium",
                                 isActive
                                     ? "bg-blue-50 text-blue-600 shadow-sm"
                                     : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
@@ -64,7 +70,7 @@ const Sidebar = () => {
                     >
                         {({ isActive }) => (
                             <>
-                                <item.icon size={20} className={isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"} />
+                                <item.icon size={18} className={isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"} />
                                 <span>{item.label}</span>
                             </>
                         )}

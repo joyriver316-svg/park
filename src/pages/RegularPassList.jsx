@@ -75,68 +75,68 @@ const RegularPassList = () => {
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filteredPasses.map((pass) => (
-                    <div key={pass.id} className={`bg-white rounded-xl border ${pass.isActive ? 'border-blue-200' : 'border-slate-200'} shadow-sm hover:shadow-md transition-shadow`}>
-                        <div className="p-5 border-b border-slate-100 flex items-start justify-between">
+                    <div key={pass.id} className={`bg-white rounded-lg border ${pass.isActive ? 'border-blue-200' : 'border-slate-200'} shadow-sm hover:shadow-md transition-shadow`}>
+                        <div className="p-3 border-b border-slate-100 flex items-start justify-between">
                             <div>
-                                <span className={`inline-block px-2 py-0.5 rounded-md text-[10px] font-bold mb-2 ${pass.type === 'Monthly' ? 'bg-purple-100 text-purple-600' :
-                                        pass.type === 'Weekly' ? 'bg-green-100 text-green-600' :
-                                            'bg-orange-100 text-orange-600'
+                                <span className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-bold mb-1 ${pass.type === 'Monthly' ? 'bg-purple-100 text-purple-600' :
+                                    pass.type === 'Weekly' ? 'bg-green-100 text-green-600' :
+                                        'bg-orange-100 text-orange-600'
                                     }`}>
                                     {pass.type === 'Monthly' ? '월 정기권' :
                                         pass.type === 'Weekly' ? '주간권' : '일일권'}
                                 </span>
-                                <h3 className="font-bold text-slate-800 text-lg">{pass.name}</h3>
-                                <p className="text-xs text-slate-400 mt-0.5">{pass.id}</p>
+                                <h3 className="font-bold text-slate-800 text-sm">{pass.name}</h3>
+                                <p className="text-[10px] text-slate-400 mt-0.5">{pass.id}</p>
                             </div>
                             <button
                                 onClick={() => toggleStatus(pass.id)}
                                 className={`transition-colors ${pass.isActive ? 'text-blue-600' : 'text-slate-300'}`}
                             >
-                                {pass.isActive ? <ToggleRight size={32} /> : <ToggleLeft size={32} />}
+                                {pass.isActive ? <ToggleRight size={20} /> : <ToggleLeft size={20} />}
                             </button>
                         </div>
 
-                        <div className="p-5 space-y-4">
-                            <div className="flex items-center justify-between text-sm">
+                        <div className="p-3 space-y-1.5">
+                            <div className="flex items-center justify-between text-xs">
                                 <span className="text-slate-500 flex items-center gap-1.5">
-                                    <CreditCard size={16} /> 가격
+                                    <CreditCard size={14} /> 가격
                                 </span>
                                 <span className="font-medium text-slate-900">
                                     {pass.price.toLocaleString()}원
                                 </span>
                             </div>
 
-                            <div className="flex items-center justify-between text-sm">
+                            <div className="flex items-center justify-between text-xs">
                                 <span className="text-slate-500 flex items-center gap-1.5">
-                                    <Car size={16} /> 주차장
+                                    <Car size={14} /> 주차장
                                 </span>
-                                <span className="font-medium text-slate-900 truncate max-w-[150px] text-right" title={pass.parkingLot}>
+                                <span className="font-medium text-slate-900 truncate max-w-[120px] text-right" title={pass.parkingLot}>
                                     {pass.parkingLot}
                                 </span>
                             </div>
 
-                            <div className="text-sm bg-slate-50 p-3 rounded-lg border border-slate-100">
-                                <span className="text-slate-500 flex items-center gap-1.5 mb-1 text-xs">
+                            <div className="text-xs bg-slate-50 p-2 rounded border border-slate-100">
+                                <span className="text-slate-500 flex items-center gap-1.5 mb-1 text-[10px]">
                                     <Calendar size={12} /> 설명
                                 </span>
-                                <p className="text-slate-700 text-xs leading-relaxed">
+                                <p className="text-slate-700 text-[10px] leading-snug line-clamp-2">
                                     {pass.description}
                                 </p>
                             </div>
                         </div>
 
-                        <div className="p-4 bg-slate-50 rounded-b-xl border-t border-slate-100 flex justify-end">
+                        <div className="p-2 bg-slate-50 rounded-b-lg border-t border-slate-100 flex justify-end gap-2">
                             <button
                                 onClick={() => handleDelete(pass.id)}
-                                className="text-sm font-medium text-slate-500 hover:text-slate-800 px-3 py-1.5"
+                                className="text-xs font-medium text-slate-500 hover:text-slate-800 px-2 py-1"
                             >
                                 삭제
                             </button>
                             <button
                                 onClick={() => handleEdit(pass)}
-                                className="text-sm font-medium text-blue-600 hover:text-blue-700 px-3 py-1.5"
+                                className="text-xs font-medium text-blue-600 hover:text-blue-700 px-2 py-1"
                             >
                                 수정
                             </button>
@@ -147,12 +147,12 @@ const RegularPassList = () => {
                 {/* Add New Card Stub */}
                 <button
                     onClick={handleAdd}
-                    className="border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 hover:border-slate-300 hover:bg-slate-50 transition-all p-8 min-h-[300px]"
+                    className="border-2 border-dashed border-slate-200 rounded-lg flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 hover:border-slate-300 hover:bg-slate-50 transition-all p-4 min-h-[180px]"
                 >
-                    <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                        <Plus size={24} />
+                    <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center mb-2">
+                        <Plus size={20} />
                     </div>
-                    <span className="font-medium">새 정기권 추가</span>
+                    <span className="font-medium text-sm">새 정기권 추가</span>
                 </button>
             </div>
 

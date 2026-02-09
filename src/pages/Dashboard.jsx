@@ -8,17 +8,17 @@ import {
 import { exportToCSV } from '../utils/exportUtils';
 
 const StatCard = ({ title, value, change, icon: Icon, trend }) => (
-    <div className="bg-white p-7 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 flex items-start justify-between">
+    <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200 flex items-start justify-between">
         <div>
-            <p className="text-sm font-semibold text-slate-500 tracking-wide">{title}</p>
-            <h3 className="text-3xl font-bold text-slate-900 mt-3 tracking-tight font-display">{value}</h3>
-            <div className={`flex items-center mt-3 text-sm font-medium ${trend === 'up' ? 'text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full inline-flex' : 'text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full inline-flex'}`}>
+            <p className="text-xs font-semibold text-slate-500 tracking-wide">{title}</p>
+            <h3 className="text-2xl font-bold text-slate-900 mt-1.5 tracking-tight font-display">{value}</h3>
+            <div className={`flex items-center mt-2 text-xs font-medium ${trend === 'up' ? 'text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full inline-flex' : 'text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded-full inline-flex'}`}>
                 <span>{change}</span>
-                <span className="ml-1.5 text-slate-400 font-normal">vs 지난달</span>
+                <span className="ml-1 text-slate-400 font-normal">vs 지난달</span>
             </div>
         </div>
-        <div className={`p-3.5 rounded-xl ${trend === 'up' ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-50 text-slate-600'}`}>
-            <Icon size={26} strokeWidth={1.5} />
+        <div className={`p-2.5 rounded-lg ${trend === 'up' ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-50 text-slate-600'}`}>
+            <Icon size={20} strokeWidth={1.5} />
         </div>
     </div>
 );
@@ -95,50 +95,44 @@ const Dashboard = () => {
                     >
                         리포트 내보내기
                     </button>
-                    <button
-                        onClick={() => navigate('/monitoring')}
-                        className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 hover:shadow-lg transition-all"
-                    >
-                        실시간 관제
-                    </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatCard title="총 매출" value={`₩${dashboardData.totalRevenue.toLocaleString()}`} change="+20.1%" icon={DollarSign} trend="up" />
                 <StatCard title="현재 입차 차량" value={`${dashboardData.currentOccupancy}대`} change="+15%" icon={Users} trend="up" />
                 <StatCard title="주차면 가동률" value={`${dashboardData.occupancyRate}%`} change="-2%" icon={Activity} trend="down" />
                 <StatCard title="장애/알림" value="3건" change="+1" icon={AlertTriangle} trend="down" />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                    <h3 className="font-bold text-slate-800 mb-4">매출 현황 ({selectedLotId === 'ALL' ? '전체' : parkingLots.find(p => p.id === selectedLotId)?.name})</h3>
-                    <div className="h-64 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                    <h3 className="font-bold text-slate-800 mb-3 text-sm">매출 현황 ({selectedLotId === 'ALL' ? '전체' : parkingLots.find(p => p.id === selectedLotId)?.name})</h3>
+                    <div className="h-56 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 text-sm">
                         차트 영역 (매출 추이) - {selectedLotId === 'ALL' ? '통합' : '개별'} 데이터
                     </div>
                 </div>
 
-                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                    <h3 className="font-bold text-slate-800 mb-4">최근 입출차 이력</h3>
-                    <div className="space-y-4">
+                <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                    <h3 className="font-bold text-slate-800 mb-3 text-sm">최근 입출차 이력</h3>
+                    <div className="space-y-3">
                         {dashboardData.recentLogs.length > 0 ? (
                             dashboardData.recentLogs.map((log) => (
-                                <div key={log.id} className="flex items-center gap-3 py-2 border-b border-slate-100 last:border-0">
-                                    <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                                <div key={log.id} className="flex items-center gap-3 py-1.5 border-b border-slate-100 last:border-0">
+                                    <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-[10px]">
                                         {log.vehicleNo.slice(-4)}
                                     </div>
                                     <div>
-                                        <p className="text-sm font-medium text-slate-800">{log.vehicleNo} {log.status === 'Exited' ? '출차' : '입차'}</p>
-                                        <p className="text-xs text-slate-500">{log.entryTime.split(' ')[1]} • {log.parkingLot}</p>
+                                        <p className="text-xs font-medium text-slate-800">{log.vehicleNo} {log.status === 'Exited' ? '출차' : '입차'}</p>
+                                        <p className="text-[10px] text-slate-500">{log.entryTime.split(' ')[1]} • {log.parkingLot}</p>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <div className="text-center py-4 text-slate-400 text-sm">데이터가 없습니다.</div>
+                            <div className="text-center py-4 text-slate-400 text-xs">데이터가 없습니다.</div>
                         )}
                     </div>
-                    <button className="w-full mt-4 py-2 text-sm text-blue-600 font-medium hover:bg-blue-50 rounded-lg transition-colors">
+                    <button className="w-full mt-3 py-1.5 text-xs text-blue-600 font-medium hover:bg-blue-50 rounded-lg transition-colors">
                         전체 보기
                     </button>
                 </div>

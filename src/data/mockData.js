@@ -66,9 +66,10 @@ export const entryExitLogs = [
 ];
 
 export const feePolicies = [
-    { id: 'POL-001', name: '일반 요금 (강남점)', type: 'Time-based', baseTime: 30, baseRate: 3000, unitTime: 10, unitRate: 1000, maxDaily: 50000, gracePeriod: 10, isActive: true },
-    { id: 'POL-002', name: '야간 할인 (강남점)', type: 'Flat-rate', baseTime: 0, baseRate: 10000, unitTime: 0, unitRate: 0, maxDaily: 10000, gracePeriod: 0, isActive: true },
-    { id: 'POL-003', name: '표준 요금 (판교)', type: 'Time-based', baseTime: 60, baseRate: 0, unitTime: 10, unitRate: 500, maxDaily: 20000, gracePeriod: 20, isActive: false },
+    { id: 'POL-001', name: '일반 요금 (강남점)', type: 'Time-based', baseTime: 30, baseRate: 3000, unitTime: 10, unitRate: 1000, maxDaily: 50000, gracePeriod: 10, isActive: true, parkingLotId: 'PL-001' },
+    { id: 'POL-002', name: '야간 할인 (강남점)', type: 'Flat-rate', baseTime: 0, baseRate: 10000, unitTime: 0, unitRate: 0, maxDaily: 10000, gracePeriod: 0, isActive: true, parkingLotId: 'PL-001' },
+    { id: 'POL-003', name: '표준 요금 (판교)', type: 'Time-based', baseTime: 60, baseRate: 0, unitTime: 10, unitRate: 500, maxDaily: 20000, gracePeriod: 20, isActive: false, parkingLotId: 'PL-003' },
+    { id: 'POL-004', name: '전사 기본 정책', type: 'Time-based', baseTime: 30, baseRate: 2000, unitTime: 10, unitRate: 500, maxDaily: 30000, gracePeriod: 15, isActive: true, parkingLotId: 'All' },
 ];
 
 export const revenueData = {
@@ -98,15 +99,16 @@ export const revenueData = {
 };
 
 export const regularPasses = [
-    { id: 'PASS-001', name: '월 정기권 (강남점)', type: 'Monthly', price: 150000, parkingLot: '강남 파이낸스 센터', description: '매월 1일 갱신, 평일/주말 모두 사용 가능', isActive: true },
-    { id: 'PASS-002', name: '평일 주간권 (서초점)', type: 'Monthly', price: 120000, parkingLot: '서초 마제스타 시티', description: '평일 09:00 ~ 18:00 사용 가능', isActive: true },
-    { id: 'PASS-003', name: '1일 정기권 (판교)', type: 'Daily', price: 15000, parkingLot: '판교 테크노벨리 공영', description: '24시간 자유 입출차 가능', isActive: true },
+    { id: 'PASS-001', name: '월 정기권 (강남점)', type: 'Monthly', price: 150000, parkingLot: '강남 파이낸스 센터', parkingLotId: 'PL-001', description: '매월 1일 갱신, 평일/주말 모두 사용 가능', isActive: true },
+    { id: 'PASS-002', name: '평일 주간권 (서초점)', type: 'Monthly', price: 120000, parkingLot: '서초 마제스타 시티', parkingLotId: 'PL-002', description: '평일 09:00 ~ 18:00 사용 가능', isActive: true },
+    { id: 'PASS-003', name: '1일 정기권 (판교)', type: 'Daily', price: 15000, parkingLot: '판교 테크노벨리 공영', parkingLotId: 'PL-003', description: '24시간 자유 입출차 가능', isActive: true },
+    { id: 'PASS-004', name: '전사 임직원 패스', type: 'Monthly', price: 0, parkingLot: '전체', parkingLotId: 'All', description: '전사 임직원 무료 주차', isActive: true },
 ];
 
 export const discountTickets = [
-    { id: 'DISC-001', name: '방문객 1시간 할인', code: 'VISIT1H', type: 'Time', value: 60, validityPeriod: '2026-12-31', isActive: true },
-    { id: 'DISC-002', name: '입주사 50% 할인', code: 'TENANT50', type: 'Percentage', value: 50, validityPeriod: '2026-12-31', isActive: true },
-    { id: 'DISC-003', name: '주말 3000원 할인', code: 'WKND3000', type: 'Fixed', value: 3000, validityPeriod: '2026-06-30', isActive: false },
+    { id: 'DISC-001', name: '방문객 1시간 할인', code: 'VISIT1H', type: 'Time', value: 60, validityPeriod: '2026-12-31', isActive: true, parkingLotId: 'All' },
+    { id: 'DISC-002', name: '입주사 50% 할인 (강남)', code: 'TENANT50', type: 'Percentage', value: 50, validityPeriod: '2026-12-31', isActive: true, parkingLotId: 'PL-001' },
+    { id: 'DISC-003', name: '주말 3000원 할인 (서초)', code: 'WKND3000', type: 'Fixed', value: 3000, validityPeriod: '2026-06-30', isActive: false, parkingLotId: 'PL-002' },
 ];
 
 export const contracts = [

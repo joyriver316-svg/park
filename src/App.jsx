@@ -13,6 +13,7 @@ import RevenueReport from './pages/RevenueReport';
 import Settings from './pages/Settings';
 import Monitoring from './pages/Monitoring';
 import TenantManagement from './pages/TenantManagement';
+import AIAgent from './pages/AIAgent';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="ai-agent" element={<AIAgent />} />
           <Route path="users" element={<UserManagement />} />
           <Route path="system-health" element={<SystemHealth />} />
 

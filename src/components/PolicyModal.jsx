@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save, HelpCircle, Calculator } from 'lucide-react';
 
-const PolicyModal = ({ isOpen, onClose, onSave, policy }) => {
+const PolicyModal = ({ isOpen, onClose, onSave, policy, parkingLots }) => {
     const [formData, setFormData] = useState({
         name: '',
         type: 'Time-based',
@@ -11,7 +11,8 @@ const PolicyModal = ({ isOpen, onClose, onSave, policy }) => {
         unitRate: 0,
         maxDaily: 0,
         gracePeriod: 0,
-        isActive: true
+        isActive: true,
+        parkingLotId: 'All'
     });
 
     useEffect(() => {
@@ -27,7 +28,8 @@ const PolicyModal = ({ isOpen, onClose, onSave, policy }) => {
                 unitRate: 0,
                 maxDaily: 0,
                 gracePeriod: 0,
-                isActive: true
+                isActive: true,
+                parkingLotId: 'All'
             });
         }
     }, [policy, isOpen]);
@@ -88,6 +90,19 @@ const PolicyModal = ({ isOpen, onClose, onSave, policy }) => {
                                     />
                                 </div>
                                 <div>
+                                    <label className="block text-xs font-medium text-slate-500 mb-1">적용 주차장</label>
+                                    <select
+                                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                                        value={formData.parkingLotId}
+                                        onChange={(e) => setFormData({ ...formData, parkingLotId: e.target.value })}
+                                    >
+                                        <option value="All">전체 공통</option>
+                                        {parkingLots && parkingLots.map(lot => (
+                                            <option key={lot.id} value={lot.id}>{lot.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
                                     <label className="block text-xs font-medium text-slate-500 mb-1">요금 유형</label>
                                     <select
                                         className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
@@ -98,7 +113,7 @@ const PolicyModal = ({ isOpen, onClose, onSave, policy }) => {
                                         <option value="Flat-rate">정액제 (Flat-rate)</option>
                                     </select>
                                 </div>
-                                <div className="flex items-center gap-2 mt-4">
+                                <div className="flex items-center gap-2 mt-4 col-span-2">
                                     <input
                                         type="checkbox"
                                         id="isActive"
