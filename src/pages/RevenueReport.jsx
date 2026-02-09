@@ -22,6 +22,7 @@ import {
     ArrowUpRight
 } from 'lucide-react';
 import { revenueData } from '../data/mockData';
+import { exportToCSV } from '../utils/exportUtils';
 
 const RevenueReport = () => {
     const formatCurrency = (value) => {
@@ -47,6 +48,15 @@ const RevenueReport = () => {
         return null;
     };
 
+    const handleExport = () => {
+        const dataToExport = revenueData.daily.map(day => ({
+            '날짜': day.date,
+            '매출액': day.amount,
+            '건수': day.count
+        }));
+        exportToCSV(dataToExport, 'daily_revenue_report');
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -59,7 +69,10 @@ const RevenueReport = () => {
                         <Calendar size={16} />
                         <span>2026.02.01 ~ 2026.02.07</span>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                    <button
+                        onClick={handleExport}
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                    >
                         <Download size={16} />
                         <span>리포트 다운로드</span>
                     </button>

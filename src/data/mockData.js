@@ -12,6 +12,12 @@ export const roles = [
     { code: 'ACCOUNTANT', name: '회계 담당자', description: '매출 조회 및 세무 증빙 관리' },
 ];
 
+export const tenants = [
+    { id: 'TNT-001', name: '본사', type: 'HQ', contact: '02-1234-5678', email: 'admin@parkplay.com', status: 'Active', plan: 'Enterprise', joinedDate: '2024-01-01' },
+    { id: 'TNT-002', name: '서울주차관리(주)', type: 'Corporation', contact: '02-9876-5432', email: 'contact@parkingcorp.co.kr', status: 'Active', plan: 'Premium', joinedDate: '2024-03-15' },
+    { id: 'TNT-003', name: '스타트업 파킹', type: 'Individual', contact: '010-1111-2222', email: 'ceo@startupparking.com', status: 'Suspended', plan: 'Basic', joinedDate: '2024-06-20' },
+];
+
 export const systemHealth = {
     lpr: { status: 'operational', message: '정상 작동 중', lastCheck: '방금 전', latency: '45ms' },
     pg: { status: 'operational', message: '결제 모듈 정상', lastCheck: '1분 전', latency: '120ms' },
@@ -90,3 +96,92 @@ export const revenueData = {
         { name: '기타', value: 5, color: '#64748b' },
     ]
 };
+
+export const regularPasses = [
+    { id: 'PASS-001', name: '월 정기권 (강남점)', type: 'Monthly', price: 150000, parkingLot: '강남 파이낸스 센터', description: '매월 1일 갱신, 평일/주말 모두 사용 가능', isActive: true },
+    { id: 'PASS-002', name: '평일 주간권 (서초점)', type: 'Monthly', price: 120000, parkingLot: '서초 마제스타 시티', description: '평일 09:00 ~ 18:00 사용 가능', isActive: true },
+    { id: 'PASS-003', name: '1일 정기권 (판교)', type: 'Daily', price: 15000, parkingLot: '판교 테크노벨리 공영', description: '24시간 자유 입출차 가능', isActive: true },
+];
+
+export const discountTickets = [
+    { id: 'DISC-001', name: '방문객 1시간 할인', code: 'VISIT1H', type: 'Time', value: 60, validityPeriod: '2026-12-31', isActive: true },
+    { id: 'DISC-002', name: '입주사 50% 할인', code: 'TENANT50', type: 'Percentage', value: 50, validityPeriod: '2026-12-31', isActive: true },
+    { id: 'DISC-003', name: '주말 3000원 할인', code: 'WKND3000', type: 'Fixed', value: 3000, validityPeriod: '2026-06-30', isActive: false },
+];
+
+export const contracts = [
+    {
+        id: 'CON-001',
+        landlordName: 'GFC 자산관리',
+        parkingLotId: 'PL-001',
+        parkingLotName: '강남 파이낸스 센터',
+        startDate: '2025-01-01',
+        endDate: '2027-12-31',
+        settlementDay: 10,
+        operatorShare: 30, // 30%
+        landlordShare: 70, // 70%
+        accountInfo: '신한은행 110-123-456789 (예금주: GFC자산)',
+        status: 'Active',
+        deductions: [
+            { name: '카드 수수료', type: 'Percentage', value: 2.5 },
+            { name: '시스템 유지보수비', type: 'Fixed', value: 500000 }
+        ]
+    },
+    {
+        id: 'CON-002',
+        landlordName: '마제스타 관리단',
+        parkingLotId: 'PL-002',
+        parkingLotName: '서초 마제스타 시티',
+        startDate: '2025-03-01',
+        endDate: '2028-02-28',
+        settlementDay: 25,
+        operatorShare: 40,
+        landlordShare: 60,
+        accountInfo: '우리은행 1002-987-654321',
+        status: 'Active',
+        deductions: [
+            { name: '카드 수수료', type: 'Percentage', value: 2.3 },
+        ]
+    }
+];
+
+export const settlements = [
+    {
+        id: 'SET-202601-001',
+        contractId: 'CON-001',
+        landlordName: 'GFC 자산관리',
+        parkingLotName: '강남 파이낸스 센터',
+        period: '2026-01',
+        totalRevenue: 45000000,
+        deductionAmount: 1625000, // (45000000 * 0.025) + 500000
+        netRevenue: 43375000,
+        operatorAmount: 13012500, // 30%
+        landlordAmount: 30362500, // 70%
+        status: 'Completed',
+        processedDate: '2026-02-10'
+    },
+    {
+        id: 'SET-202601-002',
+        contractId: 'CON-002',
+        landlordName: '마제스타 관리단',
+        parkingLotName: '서초 마제스타 시티',
+        period: '2026-01',
+        totalRevenue: 28000000,
+        deductionAmount: 644000, // 28000000 * 0.023
+        netRevenue: 27356000,
+        operatorAmount: 10942400, // 40%
+        landlordAmount: 16413600, // 60%
+        status: 'Pending', // 지급 대기
+        processedDate: '-'
+    }
+];
+
+export const devices = [
+    { id: 'DEV-001', name: '강남 정문 입구 LPR', type: 'LPR', location: 'Entry', status: 'Online', state: 'Idle', parkingLotId: 'PL-001' },
+    { id: 'DEV-002', name: '강남 정문 출구 LPR', type: 'LPR', location: 'Exit', status: 'Online', state: 'Idle', parkingLotId: 'PL-001' },
+    { id: 'DEV-003', name: '강남 정문 차단기', type: 'Breaker', location: 'Entry', status: 'Online', state: 'Closed', parkingLotId: 'PL-001' },
+    { id: 'DEV-004', name: '강남 정문 출구 차단기', type: 'Breaker', location: 'Exit', status: 'Online', state: 'Closed', parkingLotId: 'PL-001' },
+    { id: 'DEV-005', name: '강남 정문 전광판', type: 'Display', location: 'Entry', status: 'Online', state: '만차', parkingLotId: 'PL-001' },
+    { id: 'DEV-006', name: '서초 정문 입구 LPR', type: 'LPR', location: 'Entry', status: 'Online', state: 'Idle', parkingLotId: 'PL-002' },
+    { id: 'DEV-007', name: '서초 정문 차단기', type: 'Breaker', location: 'Entry', status: 'Offline', state: 'Closed', parkingLotId: 'PL-002' },
+];

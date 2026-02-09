@@ -7,9 +7,11 @@ import {
     Car,
     Clock,
     MapPin,
-    MoreHorizontal
+    MoreHorizontal,
+    ShieldAlert
 } from 'lucide-react';
 import { entryExitLogs as initialLogs, parkingLots } from '../data/mockData';
+import { exportToCSV } from '../utils/exportUtils';
 
 const EntryExitLogs = () => {
     const [logs, setLogs] = useState(initialLogs);
@@ -39,6 +41,19 @@ const EntryExitLogs = () => {
         }
     };
 
+    const handleExport = () => {
+        const dataToExport = filteredLogs.map(log => ({
+            '로그 ID': log.id,
+            '차량번호': log.vehicleNo,
+            '주차장': log.parkingLot,
+            '입차시각': log.entryTime,
+            '출차시각': log.exitTime,
+            '상태': log.status,
+            '요금': log.fee
+        }));
+        exportToCSV(dataToExport, 'entry_exit_logs');
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -46,7 +61,10 @@ const EntryExitLogs = () => {
                     <h2 className="text-2xl font-bold text-slate-800">입출차 로그</h2>
                     <p className="text-sm text-slate-500 mt-1">차량의 입차 및 출차 이력을 조회하고 상세 정보를 확인합니다.</p>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors">
+                <button
+                    onClick={handleExport}
+                    className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors"
+                >
                     <Download size={16} />
                     <span>엑셀 다운로드</span>
                 </button>
@@ -113,16 +131,31 @@ const EntryExitLogs = () => {
                         </thead>
                         <tbody className="divide-y divide-slate-100">
                             {filteredLogs.map((log) => (
-                                <tr key={log.id} className="hover:bg-slate-50 transition-colors">
+                                <tr key={log.id} className={`transition-colors ${!log.verified ? 'bg-orange-50 hover:bg-orange-100' : 'hover:bg-slate-50'}`}>
                                     <td className="px-6 py-4">
                                         <div className="font-mono text-xs text-slate-400 mb-1">{log.id}</div>
                                         <div className="font-bold text-slate-900 flex items-center gap-2">
                                             <Car size={16} className="text-slate-400" />
                                             {log.vehicleNo}
+                                            {!log.verified && (
+                                                <div className="group relative">
+                                                    <ShieldAlert size={16} className="text-orange-500 cursor-help" />
+                                                    <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-10">
+                                                        수동 입력됨: {log.note}
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 text-slate-600">
-                                        {log.parkingLot}
+                                    <td className="px-6 py-4">
+                                        <div className="text-slate-600">{log.parkingLot}</div>
+                                        <div className="mt-1">
+                                            {log.source === 'AUTO_LPR' ? (
+                                                <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded border border-blue-200">AUTO</span>
+                                            ) : (
+                                                <span className="text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded border border-orange-200">MANUAL</span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4 text-slate-600">
                                         {log.entryTime}

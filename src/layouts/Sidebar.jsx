@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import {
     LayoutDashboard,
     Car,
@@ -8,7 +8,11 @@ import {
     CreditCard,
     Users,
     Activity,
-    LogOut
+    LogOut,
+    Ticket,
+    Briefcase,
+    Cctv,
+    Building2
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -17,46 +21,60 @@ const Sidebar = () => {
         { icon: LayoutDashboard, label: '대시보드', to: '/' },
         { icon: Car, label: '주차장 관리', to: '/parking-lots' },
         { icon: FileText, label: '요금 정책', to: '/policies' },
-        { icon: CreditCard, label: '매출 관리', to: '/revenue' },
+        { icon: CreditCard, label: '정기권 관리', to: '/regular-passes' },
+        { icon: Ticket, label: '할인/프로모션', to: '/discounts' },
+        { icon: Briefcase, label: '정산 및 계약', to: '/settlements' },
+        { icon: Activity, label: '매출 관리', to: '/revenue' },
         { icon: FileText, label: '입출차 로그', to: '/logs' },
         { icon: Users, label: '사용자 관리', to: '/users' },
-        { icon: Activity, label: '시스템 상태', to: '/system-health' },
         { icon: Settings, label: '시스템 설정', to: '/settings' },
+        { icon: Cctv, label: '통합 관제', to: '/monitoring' },
+        { icon: Building2, label: '테넌트 관리', to: '/tenants' },
     ];
 
     return (
-        <aside className="w-64 bg-slate-900 text-white flex flex-col h-screen fixed left-0 top-0 z-50">
-            <div className="p-6 border-b border-slate-800">
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-                    Park & Play
-                </h1>
-                <p className="text-xs text-slate-400 mt-1">관리자 대시보드</p>
+        <aside className="w-64 bg-white border-r border-slate-200 text-slate-600 flex flex-col h-screen fixed left-0 top-0 z-50 transition-all duration-300">
+            <div className="p-6 border-b border-slate-100 flex items-center gap-3">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                    P
+                </div>
+                <div>
+                    <Link to="/" className="block">
+                        <h1 className="text-lg font-bold text-slate-900 tracking-tight hover:text-blue-600 transition-colors">
+                            Park & Play
+                        </h1>
+                    </Link>
+                    <p className="text-[11px] text-slate-400 font-medium">관리자 대시보드</p>
+                </div>
             </div>
 
-            <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+            <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto custom-scrollbar">
                 {navItems.map((item) => (
                     <NavLink
                         key={item.to}
                         to={item.to}
                         className={({ isActive }) =>
                             clsx(
-                                "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200",
-                                "hover:bg-slate-800 hover:text-white",
+                                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium",
                                 isActive
-                                    ? "bg-blue-600/20 text-blue-400 border border-blue-600/20"
-                                    : "text-slate-400"
+                                    ? "bg-blue-50 text-blue-600 shadow-sm"
+                                    : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                             )
                         }
                     >
-                        <item.icon size={20} />
-                        <span className="font-medium">{item.label}</span>
+                        {({ isActive }) => (
+                            <>
+                                <item.icon size={20} className={isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"} />
+                                <span>{item.label}</span>
+                            </>
+                        )}
                     </NavLink>
                 ))}
             </nav>
 
-            <div className="p-4 border-t border-slate-800">
-                <button className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-slate-400 hover:text-white hover:bg-red-500/10 hover:text-red-400 transition-colors">
-                    <LogOut size={20} />
+            <div className="p-4 border-t border-slate-100">
+                <button className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200 group">
+                    <LogOut size={20} className="group-hover:text-red-600 transition-colors" />
                     <span className="font-medium">로그아웃</span>
                 </button>
             </div>
