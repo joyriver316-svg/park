@@ -13,25 +13,53 @@ import {
     Briefcase,
     Cctv,
     Building2,
-    Bot
+    Bot,
+    ShieldCheck,
+    ArrowRightLeft,
+    Calculator,
+    Zap
 } from 'lucide-react';
 import clsx from 'clsx';
 
 const Sidebar = ({ isOpen, onClose }) => {
-    const navItems = [
-        { icon: Bot, label: 'AI 에이전트', to: '/ai-agent' },
-        { icon: LayoutDashboard, label: '대시보드', to: '/' },
-        { icon: Cctv, label: '통합 관제', to: '/monitoring' },
-        { icon: Car, label: '주차장 관리', to: '/parking-lots' },
-        { icon: FileText, label: '요금 정책', to: '/policies' },
-        { icon: CreditCard, label: '정기권 관리', to: '/regular-passes' },
-        { icon: Ticket, label: '할인/프로모션', to: '/discounts' },
-        { icon: Briefcase, label: '정산 및 계약', to: '/settlements' },
-        { icon: Activity, label: '매출 관리', to: '/revenue' },
-        { icon: FileText, label: '입출차 로그', to: '/logs' },
-        { icon: Users, label: '사용자 관리', to: '/users' },
-        { icon: Settings, label: '시스템 설정', to: '/settings' },
-        { icon: Building2, label: '테넌트 관리', to: '/tenants' },
+    const navGroups = [
+        {
+            label: '의사결정',
+            items: [
+                { icon: Bot, label: 'AI 에이전트', to: '/ai-agent' },
+                { icon: LayoutDashboard, label: '대시보드', to: '/' },
+                { icon: ShieldCheck, label: 'PHI 건강지수', to: '/parking-health' },
+                { icon: ArrowRightLeft, label: 'CIP 흐름분석', to: '/cip-flow' },
+                { icon: Calculator, label: '수익 시뮬레이터', to: '/revenue-simulator' },
+                { icon: Zap, label: 'EV 분석', to: '/ev-analysis' },
+            ]
+        },
+        {
+            label: '운영관리',
+            items: [
+                { icon: Cctv, label: '통합 관제', to: '/monitoring' },
+                { icon: Car, label: '주차장 관리', to: '/parking-lots' },
+                { icon: FileText, label: '입출차 로그', to: '/logs' },
+            ]
+        },
+        {
+            label: '정산/매출',
+            items: [
+                { icon: FileText, label: '요금 정책', to: '/policies' },
+                { icon: CreditCard, label: '정기권 관리', to: '/regular-passes' },
+                { icon: Ticket, label: '할인/프로모션', to: '/discounts' },
+                { icon: Briefcase, label: '정산 및 계약', to: '/settlements' },
+                { icon: Activity, label: '매출 관리', to: '/revenue' },
+            ]
+        },
+        {
+            label: '시스템',
+            items: [
+                { icon: Users, label: '사용자 관리', to: '/users' },
+                { icon: Building2, label: '테넌트 관리', to: '/tenants' },
+                { icon: Settings, label: '시스템 설정', to: '/settings' },
+            ]
+        },
     ];
 
     return (
@@ -53,28 +81,35 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </div>
             </div>
 
-            <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto custom-scrollbar">
-                {navItems.map((item) => (
-                    <NavLink
-                        key={item.to}
-                        to={item.to}
-                        onClick={onClose}
-                        className={({ isActive }) =>
-                            clsx(
-                                "flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium",
-                                isActive
-                                    ? "bg-blue-50 text-blue-600 shadow-sm"
-                                    : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                            )
-                        }
-                    >
-                        {({ isActive }) => (
-                            <>
-                                <item.icon size={18} className={isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"} />
-                                <span>{item.label}</span>
-                            </>
-                        )}
-                    </NavLink>
+            <nav className="flex-1 px-3 py-4 space-y-4 overflow-y-auto custom-scrollbar">
+                {navGroups.map((group) => (
+                    <div key={group.label}>
+                        <p className="px-3 mb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">{group.label}</p>
+                        <div className="space-y-0.5">
+                            {group.items.map((item) => (
+                                <NavLink
+                                    key={item.to}
+                                    to={item.to}
+                                    onClick={onClose}
+                                    className={({ isActive }) =>
+                                        clsx(
+                                            "flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium",
+                                            isActive
+                                                ? "bg-blue-50 text-blue-600 shadow-sm"
+                                                : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                                        )
+                                    }
+                                >
+                                    {({ isActive }) => (
+                                        <>
+                                            <item.icon size={18} className={isActive ? "text-blue-600" : "text-slate-400"} />
+                                            <span>{item.label}</span>
+                                        </>
+                                    )}
+                                </NavLink>
+                            ))}
+                        </div>
+                    </div>
                 ))}
             </nav>
 
