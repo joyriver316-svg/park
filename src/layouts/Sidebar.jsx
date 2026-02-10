@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -17,11 +17,18 @@ import {
     ShieldCheck,
     ArrowRightLeft,
     Calculator,
-    Zap
+    Zap,
+    ChevronDown
 } from 'lucide-react';
 import clsx from 'clsx';
 
 const Sidebar = ({ isOpen, onClose }) => {
+    const [expandedGroups, setExpandedGroups] = useState({ '의사결정': true });
+
+    const toggleGroup = (label) => {
+        setExpandedGroups(prev => ({ ...prev, [label]: !prev[label] }));
+    };
+
     const navGroups = [
         {
             label: '의사결정',
@@ -81,36 +88,56 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </div>
             </div>
 
-            <nav className="flex-1 px-3 py-4 space-y-4 overflow-y-auto custom-scrollbar">
-                {navGroups.map((group) => (
-                    <div key={group.label}>
-                        <p className="px-3 mb-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">{group.label}</p>
-                        <div className="space-y-0.5">
-                            {group.items.map((item) => (
-                                <NavLink
-                                    key={item.to}
-                                    to={item.to}
-                                    onClick={onClose}
-                                    className={({ isActive }) =>
-                                        clsx(
-                                            "flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium",
-                                            isActive
-                                                ? "bg-blue-50 text-blue-600 shadow-sm"
-                                                : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                                        )
-                                    }
-                                >
-                                    {({ isActive }) => (
-                                        <>
-                                            <item.icon size={18} className={isActive ? "text-blue-600" : "text-slate-400"} />
-                                            <span>{item.label}</span>
-                                        </>
+            <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
+                {navGroups.map((group) => {
+                    const isExpanded = !!expandedGroups[group.label];
+                    return (
+                        <div key={group.label}>
+                            <button
+                                onClick={() => toggleGroup(group.label)}
+                                className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors group"
+                            >
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{group.label}</span>
+                                <ChevronDown
+                                    size={14}
+                                    className={clsx(
+                                        "text-slate-300 transition-transform duration-200",
+                                        isExpanded ? "rotate-0" : "-rotate-90"
                                     )}
-                                </NavLink>
-                            ))}
+                                />
+                            </button>
+                            <div className={clsx(
+                                "overflow-hidden transition-all duration-200",
+                                isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                            )}>
+                                <div className="space-y-0.5 pb-2">
+                                    {group.items.map((item) => (
+                                        <NavLink
+                                            key={item.to}
+                                            to={item.to}
+                                            onClick={onClose}
+                                            className={({ isActive }) =>
+                                                clsx(
+                                                    "flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-200 text-sm font-medium",
+                                                    isActive
+                                                        ? "bg-blue-50 text-blue-600 shadow-sm"
+                                                        : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                                                )
+                                            }
+                                        >
+                                            {({ isActive }) => (
+                                                <>
+                                                    <item.icon size={18} className={isActive ? "text-blue-600" : "text-slate-400"} />
+                                                    <span>{item.label}</span>
+                                                </>
+                                            )}
+                                        </NavLink>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </nav>
 
             <div className="p-4 border-t border-slate-100">
